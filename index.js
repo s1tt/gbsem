@@ -1,29 +1,35 @@
-const taskOne = () => {
-  const num1 = Number(prompt('first number', ''));
-  const num2 = Number(prompt('second number', ''));
+/////////////////////////////////////1//////////////////////////////////////////
+const cube = number => number * number * number;
+console.log(cube(2) + cube(3));
+/////////////////////////////////////2//////////////////////////////////////////
+const taxes = param => {
+  if (!Number(param) && typeof param !== 'number') return console.log('Error');
+  return `Размер заработной платы за вычетом налогов равен ${(param * 13) / 100}`;
+};
+console.log(taxes(1000));
+/////////////////////////////////////3//////////////////////////////////////////
+const maxNumberVar1 = (...nums) => {
+  let max = nums[0];
+  nums.forEach(i => {
+    if (i > max) max = i;
+  });
+  return max;
+};
+console.log(maxNumberVar1(1, 22, 3));
 
-  const result = num1 <= 1 && num2 >= 3;
-  alert(`
-Условия задачи: 'переменная num1 равна или меньше 1, а переменная num2 больше или равна 3'.
-
-Веденые вами числа: ${num1} и ${num2} ${result ? '' : 'не'} соответствуют условию
-  `);
+const maxNumberVar2 = (num1, num2, num3) => {
+  if (num1 > num2 && num1 > num3) return num1;
+  if (num2 > num1 && num2 > num3) return num2;
+  if (num3 > num1 && num3 > num2) return num1;
+};
+console.log(maxNumberVar2(1, 22, 3));
+/////////////////////////////////////4//////////////////////////////////////////
+const sum = (a, b) => a + b;
+const mul = (a, b) => a * b;
+const div = (a, b) => a / b;
+const sub = (a, b) => {
+  if (a === b) return 0;
+  return a > b ? a - b : b - a;
 };
 
-const taskTwo = () => {
-  let test = true;
-  console.log(test ? '+++' : '---');
-};
-
-const taskThree = () => {
-  const day = 30;
-  console.log(`${day} число это ${day <= 10 ? 'первая' : day <= 20 ? 'вторая' : 'третья'} декада`);
-};
-
-const taskFour = () => {
-  const number = Number(prompt('number?', ''));
-  const units = number % 10;
-  const tens = Math.floor((number % 100) / 10);
-  const hundreds = Math.floor((number % 1000) / 100);
-  console.log(`В числе ${number} количество сотен: ${hundreds}, десятков: ${tens}, единиц: ${units}`);
-};
+console.log(sub(4, 2));
