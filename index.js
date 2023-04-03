@@ -1,35 +1,41 @@
-/////////////////////////////////////1//////////////////////////////////////////
-const cube = number => number * number * number;
-console.log(cube(2) + cube(3));
-/////////////////////////////////////2//////////////////////////////////////////
-const taxes = param => {
-  if (!Number(param) && typeof param !== 'number') return console.log('Error');
-  return `Размер заработной платы за вычетом налогов равен ${(param * 13) / 100}`;
+const task1 = function (maxNumber) {
+  for (let i = 0; i <= maxNumber; i++) {
+    if (i === 0) console.log(`${i} - это ноль`);
+    else if (!(i % 2)) console.log(`${i} это четное число`);
+    else if (i % 2) console.log(`${i} это нечетное число`);
+  }
 };
-console.log(taxes(1000));
-/////////////////////////////////////3//////////////////////////////////////////
-const maxNumberVar1 = (...nums) => {
-  let max = nums[0];
-  nums.forEach(i => {
-    if (i > max) max = i;
-  });
-  return max;
-};
-console.log(maxNumberVar1(1, 22, 3));
+task1(10);
 
-const maxNumberVar2 = (num1, num2, num3) => {
-  if (num1 > num2 && num1 > num3) return num1;
-  if (num2 > num1 && num2 > num3) return num2;
-  if (num3 > num1 && num3 > num2) return num1;
+const task2 = function () {
+  const array = [1, 2, 3, 4, 5, 6, 7];
+  array.splice(3, 2);
+  return array;
 };
-console.log(maxNumberVar2(1, 22, 3));
-/////////////////////////////////////4//////////////////////////////////////////
-const sum = (a, b) => a + b;
-const mul = (a, b) => a * b;
-const div = (a, b) => a / b;
-const sub = (a, b) => {
-  if (a === b) return 0;
-  return a > b ? a - b : b - a;
-};
+console.log(task2());
 
-console.log(sub(4, 2));
+const task3 = function () {
+  function generateArrayWithRandomNumbers(length) {
+    const array = [];
+    for (let i = 0; i < length; i++) {
+      array.push(Math.floor(Math.random() * 10));
+    }
+    return array;
+  }
+
+  const array = generateArrayWithRandomNumbers(5);
+  console.log(`Массив: ${array}
+  1) Сумма элементов массива: ${(array.reduce((acc, item) => acc + item), 0)}
+  2) Минимальное число в массиве: ${Math.min(...array)}
+  3) Есть ли в массиве число 3? ${array.some(item => item === 3) ? 'Да' : 'Нет'} `);
+};
+task3();
+
+const task4 = function (maxLength) {
+  let string = '';
+  for (let i = 0; i < maxLength; i++) {
+    string += 'x';
+    console.log(string);
+  }
+};
+task4(20);
