@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="content"></div>
+
+
+  <script>
+    const content = document.querySelector('.content')
+    const button = document.createElement('button');
+    const button2 = document.createElement('button');
+    const pWrapper = document.createElement('div')
+    const par = document.createElement('p')
+
+
+    content.style.cssText = `display: flex;
+    align-items: center;
+    flex-direction: column`
+
+    content.append(button)
+    content.append(button2)
+    content.append(pWrapper)
+    pWrapper.append(par)
+
+    button.textContent = 'Отправить';
+    button2.textContent = 'Спойлер';
+
+    pWrapper.style.overflow = 'hidden'
+
+    par.textContent = 'asdasdasdasdasdasdasdasdasdasdasdasdasdasd';
+    par.style.margin = '0';
+    par.style.position = 'relative';
+    par.style.bottom = '16px';
+    par.style.transition = 'all 0.3s';
+
+    let isSend = false;
+    let isSpoilerOpen = false;
+
+    button.addEventListener('click', () => {
+      isSend = !isSend;
+      button.textContent = isSend ? 'Отправлено' : 'Отправить';
+    })
+
+    button2.addEventListener('click', () => {
+      isSpoilerOpen = !isSpoilerOpen;
+      par.style.bottom = isSpoilerOpen ? '0' : '16px';
+    })
+
+  </script>
+</body>
+
+</html>
