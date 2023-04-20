@@ -6,93 +6,115 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .error {
+      border: 1px solid red;
+    }
+
+    .errorMessage {
+      color: red;
+    }
+  </style>
 </head>
 
 <body>
-  <p class="super_element">Привет</p>
-
-  <img src="https://placeimg.com/50/50/animals" alt="">
-  <img src="https://placeimg.com/50/50/arch" alt="">
-  <img src="https://placeimg.com/50/50/nature" alt="">
-  <img src="https://placeimg.com/50/50/people" alt="">
-  <img src="https://placeimg.com/50/50/tech" alt="">
-  <img src="https://placeimg.com/50/50/tech/grayscale" alt="">
-  <img src="https://placeimg.com/50/50/tech/sepia" alt="">
+  <input id="from" type="text">
+  В инпуте написано: <span></span>
 
   <br>
 
-  <button>Кнопка</button>
-  <button class="super_element">Кнопка с классом btn</button>
-  <button>Кнопка</button>
+  <button class="messageBtn">Показать блок</button>
+  <div class="message">
+    Привет :)
+  </div>
 
   <br>
 
-  <textarea></textarea>
-
-  <br>
-
-  <ul>
-    <li>
-      <button>Кнопка 1</button>
-    </li>
-    <li>
-      <button>Кнопка 2</button>
-    </li>
-    <li>
-      <button>Кнопка 3</button>
-    </li>
-    <li>
-      <button>Кнопка 4</button>
-    </li>
-  </ul>
+  <form>
+    <label>
+      Первый инпут:
+      <input class="form-control" type="text">
+    </label>
+    <br>
+    <br>
+    <label>
+      Второй инпут:
+      <select class="form-control">
+        <option value=""></option>
+        <option value="1">Один</option>
+        <option value="2">Два</option>
+      </select>
+    </label>
+    <br>
+    <br>
+    <button>Отправить</button>
+  </form>
 
   <script>
     "use strict";
-
-    //Необходимо вывести сообщение в консоль "все теги прогрузились", когда все теги будут созданы браузером.
-    document.addEventListener('DOMContentLoaded', () => console.log('все теги прогрузились'));
-
-    //Необходимо вывести сообщение в консоль "страница загрузилась", когда все ресурсы страницы будут загружены.
-    window.addEventListener('load', () => console.log('страница загрузилась'));
-
-    /*
-    При клике на какой-либо тег на странице в консоль должно выводиться сообщение наподобие:
-    - Класс "super_element" присутствует в элементе "div".
-    - сообщение должно определять присутствует или отсутствует класс "super_element"
-    - у элемента, а также выводить в нижнем регистре верный тег в данной строке, по
-    - которому был совершен клик.
-    - Необходимо использовать делегирование.
-    */
-    const handleCheckClass = function (evt) {
-      const targetClass = 'super_element'
-      const hasClass = evt.target.classList.contains(targetClass);
-      console.log(`Класс "${targetClass}" ${hasClass ? 'присутствует' : 'отсутствует'} в элементе "${evt.target.tagName.toLowerCase()}"`);
-    }
-
-    document.addEventListener('click', handleCheckClass);
-
-    //Сделайте, чтобы при наведении на textarea в консоли появлялось сообщение: "Вы навели на textarea."
-    Array.from(document.querySelectorAll('textarea'))
-      .forEach(textarea => textarea.addEventListener('mouseover', (evt) => console.log(`Вы навели на textarea.`)));
-
-    //Необходимо повесить событие клика на тег ul. В обработчике события в консоль необходимо выводить текст, который записан внутри элемента кнопки, по которой был произведен клик. Если клик был не по кнопке, то ничего выводить не нужно. Необходимо использовать делегирование.
-    document.querySelector('ul').addEventListener('click', (evt) => {
-      if (evt.target.tagName.toLowerCase() === 'button') {
-        console.log(`Текст на текущей кнопке: "${evt.target.textContent}"`);
-      }
+    //1. При изменении значения в input с id="from", значение содержащееся в нем должно моментально отображаться в span. То есть при печати в input'е тег span также должен меняться.
+    const inputFrom = document.querySelector('#from');
+    const span = inputFrom.nextElementSibling;
+    inputFrom.addEventListener('input', () => {
+      span.textContent = inputFrom.value;
+    })
+    //2. При клике на кнопку с классом messageBtn необходимо элементу с классом message:
+    //- добавить два класса: animate_animated и animate_fadeInLeftBig
+    //- поставить данному элементу стиль visibility в значение 'visible'.
+    const messageBtn = document.querySelector('.messageBtn');
+    const message = document.querySelector('.message');
+    messageBtn.addEventListener('click', () => {
+      message.classList.add('animate_animated', 'animate_fadeInLeftBig');
+      message.style.visibility = 'visible';
     })
 
-    //Вопрос: Почему в console.log пишется сначала текст из 5 задания и только потом выводится текст из 3 задания, если мы кликаем по кнопкам в ul? Ответ необходимо написать здесь же, под этим комментарием, своими словами.
-    // В данном случае если кнопка имеет класс super_element, то событие всплывает выше по иерархии элементов и вызывается обработчик на элементе document
+    /*
+    3. Необходимо при отправке формы проверить, заполнены ли все поля в этой форме. Если какое-либо поле не заполнено, форма не должна отправляться, также должны быть подсвечены незаполненные поля (необходимо поставить класс error незаполненным полям). Как только пользователь начинает заполнять какое-либо поле, необходимо, при вводе в данное поле, произвести проверку:
+    - Если поле пустое, необходимо данное поле подсветить (поставить класс error данному полю).
+    - Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
+    */
+    const form = document.querySelector('form');
+    const inputs = form.querySelectorAll('.form-control')
 
-    //С помощью JS необходимо изменить цвет заднего фона каждого второго тега li.
-    Array.from(document.querySelectorAll('li'))
-      .forEach((liEl, index) => {
-        if (index % 2 !== 0) {
-          liEl.style.backgroundColor = 'red';
+    function handleInputEvent(event) {
+      const input = event.target;
+      input.style.border = input.value.trim() ? input.classList.remove('error') : input.classList.add('error');
+    }
+
+    inputs.forEach(input => {
+      input.addEventListener('input', handleInputEvent);
+      input.addEventListener('focusout', handleInputEvent);
+    });
+
+    form.addEventListener('submit', (event) => {
+      const errorMessage = document.querySelector('.errorMessage');
+
+      if (errorMessage) {
+        errorMessage.remove();
+      }
+
+      let isCorrect = true;
+
+      inputs.forEach(input => {
+        if (!input.value || input.classList.contains('error')) {
+          input.classList.add('error');
+          isCorrect = false;
+          return;
         }
-      })
+      });
+
+      if (!isCorrect) {
+        event.preventDefault();
+
+        const errorMessage = document.createElement('p');
+        errorMessage.classList.add('errorMessage');
+        errorMessage.textContent = 'Заполните поля формы!';
+
+        form.append(errorMessage);
+      }
+    });
 
   </script>
 </body>
+
 </html>
