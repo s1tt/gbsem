@@ -7,114 +7,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    .error {
-      border: 1px solid red;
+    .content {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+
     }
 
-    .errorMessage {
+    .card {
+      padding: 10px;
+      flex-basis: 20vw;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: space-between;
+      border: 1px solid wheat;
+    }
+
+    .card__title {
+      margin: 0;
+      text-align: center;
+    }
+
+    .card__title-link {
+      text-decoration: none;
+      transition: all .3s;
+    }
+
+    .card__title-link:hover {
       color: red;
+    }
+
+    .card__feature {
+      margin: 0;
+    }
+
+    .card__id {
+      margin: 0;
     }
   </style>
 </head>
+<div class="content">
+
+</div>
+<template id="card">
+  <article class="card">
+    <h2 class="card__title"><a class="card__title-link" href="#"></a></h2>
+    <div class="card__description"></div>
+    <p class="card__id"></p>
+  </article>
+</template>
 
 <body>
-  <input id="from" type="text">
-  В инпуте написано: <span></span>
-
-  <br>
-
-  <button class="messageBtn">Показать блок</button>
-  <div class="message">
-    Привет :)
-  </div>
-
-  <br>
-
-  <form>
-    <label>
-      Первый инпут:
-      <input class="form-control" type="text">
-    </label>
-    <br>
-    <br>
-    <label>
-      Второй инпут:
-      <select class="form-control">
-        <option value=""></option>
-        <option value="1">Один</option>
-        <option value="2">Два</option>
-      </select>
-    </label>
-    <br>
-    <br>
-    <button>Отправить</button>
-  </form>
-
-  <script>
-    "use strict";
-    //1. При изменении значения в input с id="from", значение содержащееся в нем должно моментально отображаться в span. То есть при печати в input'е тег span также должен меняться.
-    const inputFrom = document.querySelector('#from');
-    const span = inputFrom.nextElementSibling;
-    inputFrom.addEventListener('input', () => {
-      span.textContent = inputFrom.value;
-    })
-    //2. При клике на кнопку с классом messageBtn необходимо элементу с классом message:
-    //- добавить два класса: animate_animated и animate_fadeInLeftBig
-    //- поставить данному элементу стиль visibility в значение 'visible'.
-    const messageBtn = document.querySelector('.messageBtn');
-    const message = document.querySelector('.message');
-    messageBtn.addEventListener('click', () => {
-      message.classList.add('animate_animated', 'animate_fadeInLeftBig');
-      message.style.visibility = 'visible';
-    })
-
-    /*
-    3. Необходимо при отправке формы проверить, заполнены ли все поля в этой форме. Если какое-либо поле не заполнено, форма не должна отправляться, также должны быть подсвечены незаполненные поля (необходимо поставить класс error незаполненным полям). Как только пользователь начинает заполнять какое-либо поле, необходимо, при вводе в данное поле, произвести проверку:
-    - Если поле пустое, необходимо данное поле подсветить (поставить класс error данному полю).
-    - Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
-    */
-    const form = document.querySelector('form');
-    const inputs = form.querySelectorAll('.form-control')
-
-    function handleInputEvent(event) {
-      const input = event.target;
-      input.style.border = input.value.trim() ? input.classList.remove('error') : input.classList.add('error');
-    }
-
-    inputs.forEach(input => {
-      input.addEventListener('input', handleInputEvent);
-      input.addEventListener('focusout', handleInputEvent);
-    });
-
-    form.addEventListener('submit', (event) => {
-      const errorMessage = document.querySelector('.errorMessage');
-
-      if (errorMessage) {
-        errorMessage.remove();
-      }
-
-      let isCorrect = true;
-
-      inputs.forEach(input => {
-        if (!input.value || input.classList.contains('error')) {
-          input.classList.add('error');
-          isCorrect = false;
-          return;
-        }
-      });
-
-      if (!isCorrect) {
-        event.preventDefault();
-
-        const errorMessage = document.createElement('p');
-        errorMessage.classList.add('errorMessage');
-        errorMessage.textContent = 'Заполните поля формы!';
-
-        form.append(errorMessage);
-      }
-    });
-
-  </script>
+  <script src="data.js"></script>
 </body>
 
 </html>
