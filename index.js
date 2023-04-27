@@ -10,7 +10,7 @@ async function fetchData() {
 fetchData().then(data => addCards(data));
 fetchData().then(data => addCardsWithTemplate(data));
 
-////способ с без template
+//способ без template
 const addCards = function (data) {
   data.forEach(cardInfo => {
     //создание оболочки карточки
@@ -105,7 +105,7 @@ const addCardsWithTemplate = function (data) {
     cardTemplate.querySelector('.card__img').alt = cardInfo.title;
     cardTemplate.querySelector('.card__title').textContent = cardInfo.title;
     cardTemplate.querySelector('.card__synopsis').textContent = cardInfo.synopsis;
-    cardTemplate.querySelector('.card__price').textContent = `${cardInfo.price}`;
+    cardTemplate.querySelector('.card__price').textContent = `$${cardInfo.price}`;
     cardsBlock.append(cardTemplate);
   });
   cardsBlock.addEventListener('mouseover', e => {
