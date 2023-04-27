@@ -1,0 +1,129 @@
+.fetured-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fetured-items__title {
+  margin: 0;
+  margin-bottom: 6px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 36px;
+  color: #222222;
+}
+
+.fetured-items__subtitle {
+  margin: 0;
+  font-family: 'Lato';
+  font-size: 14px;
+  line-height: 17px;
+  color: #9f9f9f;
+}
+
+.fetured-items__cards-block {
+  margin: 48px 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.card {
+  background-color: #f8f8f8;
+  flex-basis: 360px;
+}
+
+.card__img-wrapper {
+  display: flex;
+  background-color: rgba(58, 56, 56);
+  position: relative;
+  opacity: 1;
+  transition: all 3s;
+}
+
+.card__img {
+  opacity: 1;
+  transition: all 0.3s;
+}
+
+.card_hovered {
+  opacity: 0.14;
+  cursor: pointer;
+}
+
+.card__description {
+  padding: 25px 16px 19px;
+}
+
+.card__title {
+  margin: 0;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  font-family: 'Lato';
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+}
+
+.card__synopsis {
+  margin: 0;
+  margin-bottom: 16px;
+  font-family: 'Lato';
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 17px;
+  color: #5d5d5d;
+}
+
+.card__synopsis::first-letter {
+  text-transform: uppercase;
+}
+
+.card__price {
+  margin: 0;
+  font-family: 'Lato';
+  font-size: 16px;
+  line-height: 19px;
+  color: #f16d7f;
+}
+
+.btn {
+  font-family: 'Lato';
+  font-size: 16px;
+  line-height: 19px;
+  text-decoration: none;
+  outline: 1px solid #f26376;
+  padding: 14px 38px;
+  color: #f26376;
+  transition: all 0.3s;
+}
+
+.fetured-items__btn:hover {
+  outline: none;
+  background-color: #f26376;
+  color: #ffffff;
+}
+
+.card__add-to-cart-btn {
+  display: flex;
+  gap: 11px;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  transform: translate(50%, -50%);
+  color: #ffffff;
+  outline-color: #ffffff;
+  opacity: 0;
+  visibility: hidden;
+  cursor: pointer;
+  transition: all 0.3;
+}
+
+.card__add-to-cart-btn_showed {
+  opacity: 1;
+  visibility: visible;
+}
