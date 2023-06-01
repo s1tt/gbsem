@@ -74,11 +74,7 @@ class Order {
   }
 
   getTotalPrice(): number {
-    if (this.products.length !== 0) {
-      return this.products.reduce((acc: number, product: Product) => product.price + acc, 0);
-    } else {
-      return 0;
-    }
+    return this.products.reduce((acc: number, product: Product) => product.price + acc, 0);
   }
 }
 
