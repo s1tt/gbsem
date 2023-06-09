@@ -1,101 +1,83 @@
-const __extends =
-  (this && this.__extends) ||
-  (function () {
-    let extendStatics = function (d, b) {
-      extendStatics =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          function (d, b) {
-            d.__proto__ = b;
-          }) ||
-        function (d, b) {
-          for (const p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-        };
-      return extendStatics(d, b);
-    };
-    return function (d, b) {
-      if (typeof b !== 'function' && b !== null) throw new TypeError(`Class extends value ${String(b)} is not a constructor or null`);
-      extendStatics(d, b);
-      function __() {
-        this.constructor = d;
-      }
-      d.prototype = b === null ? Object.create(b) : ((__.prototype = b.prototype), new __());
-    };
-  })();
 /*
-Реализуйте класс Employee (сотрудник), который имеет следующие свойства и методы:
-Свойство name (имя) - строка, имя сотрудника.
-Метод displayInfo() - выводит информацию о сотруднике (имя).
-Реализуйте класс Manager (менеджер), который наследует класс Employee и имеет дополнительное свойство и метод:
-Свойство department (отдел) - строка, отдел, в котором работает менеджер.
-Метод displayInfo() - переопределяет метод displayInfo() родительского класса и выводит информацию о менеджере (имя и отдел).
-*/
-const Employee = /** @class */ (function () {
-  function Employee(name) {
-    this.name = name;
-  }
-  Employee.prototype.displayInfo = function () {
-    return '\u0418\u043C\u044F \u0441\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A\u0430: '.concat(this.name);
-  };
-  return Employee;
-})();
-const Manager = /** @class */ (function (_super) {
-  __extends(Manager, _super);
-  function Manager(name, departament) {
-    const _this = _super.call(this, name) || this;
-    _this.departament = departament;
-    return _this;
-  }
-  Manager.prototype.displayInfo = function () {
-    return ''.concat(_super.prototype.displayInfo.call(this), '\n\u041E\u0442\u0434\u0435\u043B: ').concat(this.departament);
-  };
-  return Manager;
-})(Employee);
-// Пример использования классов
-const employee = new Employee('John Smith');
-console.log(employee.displayInfo());
-// Вывод:
-// Name: John Smith
-const manager = new Manager('Jane Doe', 'Sales');
-console.log(manager.displayInfo());
-// Вывод:
-// Name: Jane Doe
-// Department: Sales
-/*
-Реализуйте класс Order (заказ), который имеет следующие свойства и методы:
+Реализуйте функцию getUserData, которая принимает идентификатор пользователя (ID) в качестве аргумента и использует fetch для получения данных о пользователе с заданным ID с удаленного сервера. Функция должна возвращать промис, который разрешается с данными о пользователе в виде объекта. Если пользователь с указанным ID не найден, промис должен быть отклонен с соответствующим сообщением об ошибке.
 
-Свойство orderNumber (номер заказа) - число, уникальный номер заказа.
-Свойство products (продукты) - массив, содержащий список продуктов в заказе.
-Метод addProduct(product) - принимает объект product и добавляет его в список продуктов заказа.
-Метод getTotalPrice() - возвращает общую стоимость заказа, основанную на ценах продуктов.
+Подсказка, с последовательностью действий:
+getUserData использует fetch для получения данных о пользователе с удаленного сервера. Если запрос успешен (с кодом 200), функция извлекает данные из ответа с помощью response.json() и возвращает объект с данными о пользователе. Если запрос неуспешен, функция отклоняет промис с сообщением об ошибке.
 */
-const Product = /** @class */ (function () {
-  function Product(name, price) {
-    this.name = name;
-    this.price = price;
+
+async function getUserData(id) {
+  const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+
+  if (!response.ok) {
+    const errorMessage = `An error has occured: ${response.status}`;
+    throw new Error(errorMessage);
   }
-  return Product;
-})();
-const Order = /** @class */ (function () {
-  function Order(orderNumber, products) {
-    if (products === void 0) {
-      products = [];
-    }
-    this.orderNumber = orderNumber;
-    this.products = products;
+
+  const userData = await response.json();
+  return userData;
+}
+getUserData(1).then(res => console.log(res));
+
+/*
+Реализуйте функцию saveUserData, которая принимает объект с данными о пользователе в качестве аргумента и использует fetch для отправки этих данных на удаленный сервер для сохранения. Функция должна возвращать промис, который разрешается, если данные успешно отправлены, или отклоняется в случае ошибки.
+
+saveUserData использует fetch для отправки данных о пользователе на удаленный сервер для сохранения. Она отправляет POST-запрос на URL-адрес /users с указанием типа содержимого application/json и сериализует объект с данными о пользователе в JSON-строку с помощью JSON.stringify(). Если запрос успешен (с кодом 200), функция разрешает промис. Если запрос неуспешен, функция отклоняет промис с сообщени
+*/
+
+async function saveUserData(userData) {
+  const response = await fetch(`https://reqres.in/api/users/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    const errorMessage = `An error has occured: ${response.status}`;
+    throw new Error(errorMessage);
   }
-  Order.prototype.addProduct = function (product) {
-    this.products.push(product);
+
+  return data;
+}
+
+const user = {
+  name: 'John Smith',
+  age: 30,
+  email: 'john@example.com'
+};
+
+saveUserData(user)
+  .then(() => {
+    console.log(`User data saved successfully`);
+  })
+  .catch(error => {
+    console.log(`${error.message}`);
+  });
+
+/*
+  Напишите функцию changeStyleDelayed, которая принимает идентификатор элемента и время задержки (в миллисекундах) в качестве аргументов. Функция должна изменить стиль элемента через указанное время.
+
+// Пример использования функции
+changeStyleDelayed('myElement', 2000); // Через 2 секунды изменяет стиль элемента с id 'myElement'"
+*/
+
+function changeStyleDelayed(id, timeout) {
+  const element = document.getElementById(id);
+  const styles = {
+    color: 'white',
+    fontSize: '48px',
+    display: 'block',
+    margin: '0 auto',
+    padding: '10px 40px',
+    backgroundColor: 'blue',
+    borderRadius: '10px'
   };
-  Order.prototype.getTotalPrice = function () {
-    return this.products.reduce((acc, product) => product.price + acc, 0);
-  };
-  return Order;
-})();
-// Пример использования класса
-const order = new Order(12345);
-const product1 = new Product('Phone', 500);
-order.addProduct(product1);
-const product2 = new Product('Headphones', 100);
-order.addProduct(product2);
-console.log(order.getTotalPrice()); // Вывод: 600
+  setTimeout(() => {
+    Object.keys(styles).forEach(key => {
+      element.style[key] = styles[key];
+    });
+  }, timeout);
+}
+changeStyleDelayed('btn', 2000);
